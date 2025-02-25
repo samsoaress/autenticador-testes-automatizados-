@@ -1,0 +1,15 @@
+
+(
+    ele faz cadastrado com sucesso 
+    ele sabe quand
+
+)
+
+( SENHA 
+ quando vai para parte de recupera senha o site quebra)
+
+( email
+    Na parte de email quando falta caracteres especiais não cadastra como @ 
+    Ele identifica quando email já esta cadastrado 
+    Ele não  identifica quando email e valido 
+)
