@@ -1,0 +1,23 @@
+export const loginElements = {
+    username: '[name="username"]',
+    password: '[name="password"]',
+    loginButton: 'form > .btn',
+    errorMessage: '.error-message'
+  };
+  
+  export const registerElements = {
+    username: '[name="username"]',
+    email: '[name="email"]',
+    password1: '[name="password1"]',
+    password2: '[name="password2"]',
+    registerButton: 'form > .btn',
+    successMessage: '.success-message',
+    emailErrorMessage: '.email-error'
+  };
+  
+  export const forgotPasswordElements = {
+    email: '[name="email"]',
+    submitButton: 'form > .btn',
+    successMessage: '.success-message'
+  };
+  

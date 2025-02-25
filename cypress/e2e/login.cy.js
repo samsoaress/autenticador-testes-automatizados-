@@ -1,59 +1,67 @@
-describe('login',()=>{  
-  beforeEach(() =>{
-    cy.visit("http://127.0.0.1:8000/accounts/login/")
- })
-    it('Deve fazer login com sucesso', () => {
-        cy.get('[name="username"]').type('samuel'); 
-        cy.get('[name="password"]').type('teste123'); 
-         cy.get('form > .btn').click();
-        
-         cy.url().should('not.include', '/login'); 
-      })
-      it('não deve fazer login  ', () => {
-        cy.get('[name="username"]').type('teste'); 
-        cy.get('[name="password"]').type('teste'); 
-         cy.get('form > .btn').click();
-        
-      })
+import { loginElements, registerElements, forgotPasswordElements } from '../support/elements';
 
-}
-)  
-describe('registrar',()=>{
-  beforeEach(() =>{
-    cy.visit("http://127.0.0.1:8000/accounts/register/")
- })
-    it('Deve fazer cadastrar com sucesso', () => {
-      cy.get('[name="username"]').type('samuel soares'); 
-      cy.get('[name="email"]').type('samuel@gmail.com'); 
-      cy.get('[name="password1"]').type('teste123'); 
-      cy.get('[name="password2"]').type('teste123'); 
-       cy.get('form > .btn').click();
-      
-    })
-    it('Deve falar que email já cadastrato', () => {
-      cy.get('[name="username"]').type('samuel'); 
-      cy.get('[name="email"]').type('samulheus67@gmail.com'); 
-      cy.get('[name="password1"]').type('teste123'); 
-      cy.get('[name="password2"]').type('teste123'); 
-       cy.get('form > .btn').click();
-      
-    })
-    it('email errado', () => {
-      cy.get('[name="username"]').type('samuel'); 
-      cy.get('[name="email"]').type('samuelgmail.com'); 
-      cy.get('[name="password1"]').type('teste123'); 
-      cy.get('[name="password2"]').type('teste123'); 
-       cy.get('form > .btn').click();
-      
-    })
-}
-)  
-describe('esqueceu a senha ',()=>{
+describe('Login', () => {  
+  beforeEach(() => {
+    cy.visit("http://127.0.0.1:8000/accounts/login/");
+  });
+
   it('Deve fazer login com sucesso', () => {
-      cy.visit('http://127.0.0.1:8000/accounts/forget-password/')
-      cy.get('[name="email"]').type('samulheus67@gmail.com'); 
-       cy.get('form > .btn').click();
-      
-    })
-}
-)  
+    cy.get(loginElements.username).type('samuel'); 
+    cy.get(loginElements.password).type('teste123'); 
+    cy.get(loginElements.loginButton).click();
+
+
+    cy.url().should('not.include', '/login'); 
+  });
+
+  it('Não deve fazer login com credenciais inválidas', () => {
+    cy.get(loginElements.username).type('teste'); 
+    cy.get(loginElements.password).type('teste'); 
+    cy.get(loginElements.loginButton).click();
+
+    
+  });
+});
+
+describe('Registro', () => {
+  beforeEach(() => {
+    cy.visit("http://127.0.0.1:8000/accounts/register/");
+  });
+
+  it('Deve cadastrar com sucesso', () => {
+    cy.get(registerElements.username).type('jose soares'); 
+    cy.get(registerElements.email).type('jose@gmail.com'); 
+    cy.get(registerElements.password1).type('teste123'); 
+    cy.get(registerElements.password2).type('teste123'); 
+    cy.get(registerElements.registerButton).click();
+
+  });
+
+  it('Deve exibir erro ao tentar cadastrar com um e-mail já cadastrado', () => {
+    cy.get(registerElements.username).type('samuel'); 
+    cy.get(registerElements.email).type('samulheus67@gmail.com'); 
+    cy.get(registerElements.password1).type('teste123'); 
+    cy.get(registerElements.password2).type('teste123'); 
+    cy.get(registerElements.registerButton).click();
+
+
+  });
+
+  it('Deve exibir erro ao cadastrar com e-mail inválido', () => {
+    cy.get(registerElements.username).type('samuel'); 
+    cy.get(registerElements.email).type('samuelgmail.com'); 
+    cy.get(registerElements.password1).type('teste123'); 
+    cy.get(registerElements.password2).type('teste123'); 
+    cy.get(registerElements.registerButton).click();
+
+  });
+});
+
+describe('Recuperação de Senha', () => {
+  it('Deve enviar e-mail de recuperação de senha', () => {
+    cy.visit('http://127.0.0.1:8000/accounts/forget-password/');
+    cy.get(forgotPasswordElements.email).type('samulheus67@gmail.com'); 
+    cy.get(forgotPasswordElements.submitButton).click();
+
+  });
+});
