@@ -1,3 +1,5 @@
+// Desafio_tecnico_qa_Samuel_soares_caldeira
+
 import { loginElements, registerElements, forgotPasswordElements } from '../support/elements';
 
 describe('Login', () => {  
@@ -12,14 +14,16 @@ describe('Login', () => {
 
 
     cy.url().should('not.include', '/login'); 
+    cy.contains(' Bem-vindo, samuel').should('be.visible');
   });
-
+ 
   it('Não deve fazer login com credenciais inválidas', () => {
     cy.get(loginElements.username).type('teste'); 
     cy.get(loginElements.password).type('teste'); 
     cy.get(loginElements.loginButton).click();
 
-    
+    cy.contains('Credenciais inválidas').should('be.visible');
+
   });
 });
 
@@ -35,6 +39,7 @@ describe('Registro', () => {
     cy.get(registerElements.password2).type('teste123'); 
     cy.get(registerElements.registerButton).click();
 
+    cy.contains('Usuário já existe').should('be.visible');
   });
 
   it('Deve exibir erro ao tentar cadastrar com um e-mail já cadastrado', () => {
@@ -44,6 +49,7 @@ describe('Registro', () => {
     cy.get(registerElements.password2).type('teste123'); 
     cy.get(registerElements.registerButton).click();
 
+    cy.contains('Usuário já existe').should('be.visible');
 
   });
 
@@ -54,6 +60,7 @@ describe('Registro', () => {
     cy.get(registerElements.password2).type('teste123'); 
     cy.get(registerElements.registerButton).click();
 
+    cy.contains('@').should('be.visible');
   });
 });
 
@@ -63,5 +70,9 @@ describe('Recuperação de Senha', () => {
     cy.get(forgotPasswordElements.email).type('samulheus67@gmail.com'); 
     cy.get(forgotPasswordElements.submitButton).click();
 
+
+    cy.contains('TemplateDoesNotExist').should('be.visible');
+
+    
   });
 });
